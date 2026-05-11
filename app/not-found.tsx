@@ -1,7 +1,14 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Shield, ArrowLeft } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  description: "The page you are looking for does not exist. Return to Sokari Securities.",
+  robots: { index: false, follow: false },
+}
 
 export default function NotFound() {
   return (

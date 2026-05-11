@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X, Shield } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Accordion,
@@ -43,7 +44,151 @@ const itemVariants = {
 export function NavbarMobile() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const navItems = NAV_ITEMS.filter((item) => item.label !== "Home")
+
+  useEffect(() => { setMounted(true) }, [])
+
+  // Lock body scroll when open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => { document.body.style.overflow = "" }
+  }, [open])
+
+  const portal = mounted && createPortal(
+    <AnimatePresence>
+      {open && (
+        <>
+          {/* Backdrop — rendered at body level, no stacking context issues */}
+          <motion.div
+            key="overlay"
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 z-9998 bg-iron-950/70 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Panel */}
+          <motion.div
+            key="panel"
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed top-0 right-0 bottom-0 z-9999 w-80 bg-iron-950 border-l border-iron-800 flex flex-col shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-iron-800 shrink-0">
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5"
+                aria-label="Sokari Securities home"
+              >
+                <Shield className="h-5 w-5 text-crimson" />
+                <span className="font-serif text-white text-base tracking-[0.18em] uppercase">
+                  Sokari Securities
+                </span>
+              </Link>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-iron-500 hover:text-white p-1 rounded-md transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <motion.nav
+              variants={listVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex-1 overflow-y-auto px-4 py-4"
+              aria-label="Mobile navigation links"
+            >
+              {navItems.map((item) =>
+                item.children ? (
+                  <motion.div key={item.label} variants={itemVariants}>
+                    <Accordion>
+                      <AccordionItem value={item.label} className="border-b-iron-800">
+                        <AccordionTrigger
+                          className={cn(
+                            "text-sm font-medium py-3 px-2 hover:text-crimson hover:no-underline",
+                            pathname.startsWith(item.href) && item.href !== "/"
+                              ? "text-crimson"
+                              : "text-iron-200"
+                          )}
+                        >
+                          {item.label}
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-2">
+                          <div className="flex flex-col gap-1 pl-4">
+                            {item.children.map((child) => (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                onClick={() => setOpen(false)}
+                                className={cn(
+                                  "text-sm py-2 px-2 rounded-md transition-colors",
+                                  pathname === child.href
+                                    ? "text-crimson bg-crimson-muted"
+                                    : "text-iron-500 hover:text-crimson"
+                                )}
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </motion.div>
+                ) : (
+                  <motion.div key={item.href} variants={itemVariants}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "flex items-center text-sm font-medium py-3 px-2 rounded-md transition-colors",
+                        pathname === item.href
+                          ? "text-crimson"
+                          : "text-iron-200 hover:text-crimson"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                )
+              )}
+            </motion.nav>
+
+            {/* CTA */}
+            <div className="px-6 py-6 border-t border-iron-800 shrink-0">
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className={cn(buttonVariants(), "w-full justify-center")}
+              >
+                Request Consultation
+              </Link>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>,
+    document.body
+  )
 
   return (
     <>
@@ -56,133 +201,7 @@ export function NavbarMobile() {
         <Menu className="h-6 w-6" />
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="overlay"
-              variants={overlayVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed inset-0 z-40 bg-iron-950/70 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-              aria-hidden="true"
-            />
-
-            {/* Panel */}
-            <motion.div
-              key="panel"
-              variants={panelVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed top-0 right-0 bottom-0 z-50 w-80 bg-iron-950 border-l border-iron-800 flex flex-col shadow-2xl"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-iron-800 shrink-0">
-                <Link
-                  href="/"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5"
-                  aria-label="Sokari Securities home"
-                >
-                  <Shield className="h-5 w-5 text-crimson" />
-                  <span className="text-white font-black text-sm tracking-[0.18em] uppercase">
-                    SOKARI SECURITIES
-                  </span>
-                </Link>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="text-iron-500 hover:text-white p-1 rounded-md transition-colors"
-                  aria-label="Close menu"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              {/* Nav links */}
-              <motion.nav
-                variants={listVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex-1 overflow-y-auto px-4 py-4"
-                aria-label="Mobile navigation links"
-              >
-                {navItems.map((item) =>
-                  item.children ? (
-                    <motion.div key={item.label} variants={itemVariants}>
-                      <Accordion>
-                        <AccordionItem value={item.label} className="border-b-iron-800">
-                          <AccordionTrigger
-                            className={cn(
-                              "text-sm font-medium py-3 px-2 hover:text-crimson hover:no-underline",
-                              pathname.startsWith(item.href) && item.href !== "/"
-                                ? "text-crimson"
-                                : "text-iron-200"
-                            )}
-                          >
-                            {item.label}
-                          </AccordionTrigger>
-                          <AccordionContent className="pb-2">
-                            <div className="flex flex-col gap-1 pl-4">
-                              {item.children.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={() => setOpen(false)}
-                                  className={cn(
-                                    "text-sm py-2 px-2 rounded-md transition-colors",
-                                    pathname === child.href
-                                      ? "text-crimson bg-crimson-muted"
-                                      : "text-iron-500 hover:text-crimson"
-                                  )}
-                                >
-                                  {child.label}
-                                </Link>
-                              ))}
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </motion.div>
-                  ) : (
-                    <motion.div key={item.href} variants={itemVariants}>
-                      <Link
-                        href={item.href}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "flex items-center text-sm font-medium py-3 px-2 rounded-md transition-colors",
-                          pathname === item.href
-                            ? "text-crimson"
-                            : "text-iron-200 hover:text-crimson"
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.div>
-                  )
-                )}
-              </motion.nav>
-
-              {/* CTA */}
-              <div className="px-6 py-6 border-t border-iron-800 shrink-0">
-                <Link
-                  href="/contact"
-                  onClick={() => setOpen(false)}
-                  className={`${buttonVariants()} w-full bg-crimson text-white hover:bg-crimson-hover font-semibold tracking-wide`}
-                >
-                  Request Consultation
-                </Link>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {portal}
     </>
   )
 }

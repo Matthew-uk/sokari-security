@@ -39,8 +39,24 @@ export default async function IndustryPage({
 
   const relatedServices = SERVICES.filter((s) => industry.relatedServices.includes(s.slug))
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://sokarisecurities.com" },
+      { "@type": "ListItem", position: 2, name: "Industries", item: "https://sokarisecurities.com/industries" },
+      { "@type": "ListItem", position: 3, name: industry.title, item: `https://sokarisecurities.com/industries/${industry.slug}` },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <ScrollProgress />
       <Navbar />
       <main id="main-content" tabIndex={-1}>

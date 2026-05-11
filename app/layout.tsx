@@ -74,27 +74,64 @@ export const metadata: Metadata = {
 
 const orgJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["LocalBusiness", "Organization"],
   name: "Sokari Securities",
   url: "https://sokarisecurities.com",
   logo: "https://sokarisecurities.com/assets/icons/logo.svg",
+  image: "https://sokarisecurities.com/assets/images/og/og-default.jpg",
   description:
-    "Premium international security company headquartered in Port Harcourt, Nigeria.",
+    "Premium international security company headquartered in Port Harcourt, Nigeria. Executive protection, intelligence, physical security, and risk management.",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "4 Tombia Street, GRA Phase 2",
     addressLocality: "Port Harcourt",
     addressRegion: "Rivers State",
+    postalCode: "500001",
     addressCountry: "NG",
   },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+234-800-000-0000",
-    contactType: "customer service",
-    availableLanguage: "English",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 4.8156,
+    longitude: 7.0498,
   },
+  telephone: "+234-800-000-0000",
+  email: "info@sokarisecurities.com",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "00:00",
+    closes: "23:59",
+  },
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+234-800-000-0000",
+      contactType: "customer service",
+      availableLanguage: "English",
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+234-900-000-0000",
+      contactType: "emergency",
+      availableLanguage: "English",
+    },
+  ],
+  areaServed: [
+    { "@type": "Country", name: "Nigeria" },
+    { "@type": "AdministrativeArea", name: "West Africa" },
+  ],
+  knowsAbout: [
+    "Executive Protection",
+    "Security Risk Management",
+    "Intelligence & Surveillance",
+    "Maritime Security",
+    "Physical Security",
+    "Cyber Security Advisory",
+  ],
   sameAs: [
     "https://www.linkedin.com/company/sokari-securities",
     "https://twitter.com/SokariSecures",
+    "https://instagram.com/sokarisecurities",
   ],
 }
 

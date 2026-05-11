@@ -13,11 +13,57 @@ export const metadata: Metadata = {
   title: "Client Reviews",
   description:
     "Read what our clients say about Sokari Securities — verified reviews from executives, security managers, and organisations across Nigeria and West Africa.",
+  openGraph: {
+    title: "Client Reviews | Sokari Securities",
+    description:
+      "Verified reviews from executives, security managers, and organisations across Nigeria and West Africa.",
+    url: "https://sokarisecurities.com/reviews",
+  },
+}
+
+const avgRating =
+  REVIEWS.reduce((sum, r) => sum + r.rating, 0) / REVIEWS.length
+
+const reviewsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Sokari Securities",
+  url: "https://sokarisecurities.com",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: avgRating.toFixed(1),
+    reviewCount: REVIEWS.length,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  review: REVIEWS.map((r) => ({
+    "@type": "Review",
+    author: {
+      "@type": "Person",
+      name: r.reviewer,
+      jobTitle: r.title,
+    },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: r.rating,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    reviewBody: r.body,
+    datePublished: r.date,
+    publisher: { "@type": "Organization", name: r.company },
+  })),
 }
 
 export default function ReviewsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(reviewsJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <ScrollProgress />
       <Navbar />
       <main id="main-content" tabIndex={-1}>

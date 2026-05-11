@@ -59,12 +59,29 @@ export default async function CareerPage({
     },
     employmentType: job.type.toUpperCase().replace("-", "_"),
     datePosted: job.postedDate,
+    url: `https://sokarisecurities.com/careers/${job.slug}`,
+  }
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://sokarisecurities.com" },
+      { "@type": "ListItem", position: 2, name: "Careers", item: "https://sokarisecurities.com/careers" },
+      { "@type": "ListItem", position: 3, name: job.title, item: `https://sokarisecurities.com/careers/${job.slug}` },
+    ],
   }
 
   return (
     <>
       <ScrollProgress />
       <Navbar />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -59,6 +59,21 @@ export default async function InsightPage({
     author: { "@type": "Person", name: insight.author },
     datePublished: insight.date,
     image: insight.coverImage,
+    publisher: {
+      "@type": "Organization",
+      name: "Sokari Securities",
+      url: "https://sokarisecurities.com",
+    },
+  }
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://sokarisecurities.com" },
+      { "@type": "ListItem", position: 2, name: "Insights", item: "https://sokarisecurities.com/insights" },
+      { "@type": "ListItem", position: 3, name: insight.title, item: `https://sokarisecurities.com/insights/${insight.slug}` },
+    ],
   }
 
   return (
@@ -69,6 +84,12 @@ export default async function InsightPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       <main id="main-content" tabIndex={-1} className="pt-20 lg:pt-24">

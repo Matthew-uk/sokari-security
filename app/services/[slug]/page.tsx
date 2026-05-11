@@ -26,6 +26,11 @@ export async function generateMetadata({
   return {
     title: service.title,
     description: service.metaDescription,
+    openGraph: {
+      title: `${service.title} | Sokari Securities`,
+      description: service.metaDescription,
+      url: `https://sokarisecurities.com/services/${service.slug}`,
+    },
   }
 }
 
@@ -38,8 +43,68 @@ export default async function ServicePage({
   const service = SERVICES.find((s) => s.slug === slug)
   if (!service) notFound()
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.description,
+    url: `https://sokarisecurities.com/services/${service.slug}`,
+    provider: {
+      "@type": "Organization",
+      name: "Sokari Securities",
+      url: "https://sokarisecurities.com",
+    },
+    areaServed: { "@type": "Country", name: "Nigeria" },
+    serviceType: service.title,
+  }
+
+  const faqJsonLd = service.faqs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: service.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }
+    : null
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://sokarisecurities.com" },
+      { "@type": "ListItem", position: 2, name: "Services", item: "https://sokarisecurities.com/services" },
+      { "@type": "ListItem", position: 3, name: service.title, item: `https://sokarisecurities.com/services/${service.slug}` },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <ScrollProgress />
       <Navbar />
       <main id="main-content" tabIndex={-1}>
