@@ -1,26 +1,311 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ============================================================
+     SOKARI SECURITIES — DESIGN SYSTEM TOKENS (Iron & Crimson)
+  ============================================================ */
+
+  /* --- Brand Primitives --- */
+  --color-iron-950:        #0D0F12;
+  --color-iron-900:        #141619;
+  --color-iron-800:        #1E2128;
+  --color-iron-700:        #2A2D35;
+  --color-iron-600:        #3D4149;
+  --color-iron-500:        #6B7280;
+  --color-iron-200:        #D1D5DB;
+  --color-iron-50:         #F9FAFB;
+  --color-crimson:         #C8102E;
+  --color-crimson-hover:   #E01030;
+  --color-crimson-muted:   rgba(200,16,46,0.12);
+  --color-crimson-border:  rgba(200,16,46,0.35);
+
+  /* --- Semantic Background --- */
+  --color-bg-primary:     #0D0F12;
+  --color-bg-secondary:   #141619;
+  --color-bg-surface:     #1E2128;
+  --color-bg-overlay:     rgba(13,15,18,0.88);
+
+  /* --- Semantic Text --- */
+  --color-text-primary:   #F9FAFB;
+  --color-text-muted:     #6B7280;
+  --color-text-heading:   #FFFFFF;
+  --color-text-inverse:   #0D0F12;
+
+  /* --- Accent --- */
+  --color-accent-crimson:        #C8102E;
+  --color-accent-crimson-hover:  #E01030;
+  --color-accent-crimson-muted:  rgba(200,16,46,0.12);
+  --color-accent-crimson-text:   #E8324A;
+
+  /* --- Borders --- */
+  --color-border-subtle:  rgba(107,114,128,0.18);
+  --color-border-accent:  rgba(200,16,46,0.35);
+
+  /* --- Status --- */
+  --color-success: #22C55E;
+  --color-error:   #EF4444;
+
+  /* ============================================================
+     SHADCN CSS VARIABLE OVERRIDES (mapped to Sokari palette)
+  ============================================================ */
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:            var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-destructive:        var(--destructive);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+
+  /* Radius */
+  --radius-sm:  calc(var(--radius) * 0.6);
+  --radius-md:  calc(var(--radius) * 0.8);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-full: 9999px;
+
+  /* Fonts */
+  --font-sans:    var(--font-lexend);
+  --font-mono:    var(--font-dm-mono);
+  --font-heading: var(--font-bebas);
+  --font-serif:   var(--font-bebas);
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 24px rgba(200,16,46,0.18);
+  --shadow-nav:  0 2px 16px rgba(0,0,0,0.6);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4,0,0.2,1);
+  --transition-base: 250ms cubic-bezier(0.4,0,0.2,1);
+  --transition-slow: 400ms cubic-bezier(0.4,0,0.2,1);
+
+  /* Z-index */
+  --z-above:   10;
+  --z-sticky:  20;
+  --z-nav:     40;
+  --z-overlay: 50;
+  --z-modal:   60;
+  --z-toast:   70;
+
+  /* Sidebar (shadcn requirement) */
+  --color-sidebar-ring:               var(--sidebar-ring);
+  --color-sidebar-border:             var(--sidebar-border);
+  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
+  --color-sidebar-accent:             var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar-foreground:         var(--sidebar-foreground);
+  --color-sidebar:                    var(--sidebar);
+
+  /* Charts (shadcn requirement) */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   SOKARI BRAND — CSS CUSTOM PROPERTIES (oklch-compatible)
+============================================================ */
+:root {
+  --background:          oklch(0.08 0.005 260);   /* ~#0D0F12 iron-950 */
+  --foreground:          oklch(0.97 0 0);          /* ~#F9FAFB */
+
+  --card:                oklch(0.10 0.005 260);    /* ~#141619 iron-900 */
+  --card-foreground:     oklch(0.97 0 0);
+
+  --popover:             oklch(0.10 0.005 260);
+  --popover-foreground:  oklch(0.97 0 0);
+
+  --primary:             oklch(0.43 0.21 18);      /* ~#C8102E crimson */
+  --primary-foreground:  oklch(0.97 0 0);          /* white on crimson */
+
+  --secondary:           oklch(0.13 0.005 260);    /* ~#1E2128 iron-800 */
+  --secondary-foreground: oklch(0.97 0 0);
+
+  --muted:               oklch(0.13 0.005 260);
+  --muted-foreground:    oklch(0.52 0.01 260);     /* ~#6B7280 iron-500 */
+
+  --accent:              oklch(0.43 0.21 18 / 12%); /* crimson muted */
+  --accent-foreground:   oklch(0.43 0.21 18);
+
+  --destructive:         oklch(0.52 0.22 27);
+
+  --border:              oklch(0.52 0.01 260 / 18%);
+  --input:               oklch(0.52 0.01 260 / 22%);
+  --ring:                oklch(0.43 0.21 18);      /* crimson focus ring */
+
+  --radius: 0.375rem;
+
+  /* Chart colors — crimson spectrum */
+  --chart-1: oklch(0.43 0.21 18);
+  --chart-2: oklch(0.53 0.18 18);
+  --chart-3: oklch(0.63 0.14 18);
+  --chart-4: oklch(0.73 0.10 18);
+  --chart-5: oklch(0.83 0.06 18);
+
+  /* Sidebar */
+  --sidebar:                    oklch(0.09 0.005 260);
+  --sidebar-foreground:         oklch(0.97 0 0);
+  --sidebar-primary:            oklch(0.43 0.21 18);
+  --sidebar-primary-foreground: oklch(0.97 0 0);
+  --sidebar-accent:             oklch(0.43 0.21 18 / 12%);
+  --sidebar-accent-foreground:  oklch(0.43 0.21 18);
+  --sidebar-border:             oklch(0.52 0.01 260 / 18%);
+  --sidebar-ring:               oklch(0.43 0.21 18);
+}
+
+/* ============================================================
+   BASE STYLES
+============================================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    background-color: #0D0F12;
+    color: #F9FAFB;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-bebas);
+    letter-spacing: 0.03em;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #C8102E;
+    outline-offset: 2px;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background: #C8102E;
+    color: #FFFFFF;
+    font-weight: 700;
+    z-index: 9999;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .prose-sokari {
+    color: #F9FAFB;
+    line-height: 1.75;
+  }
+  .prose-sokari h2 {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose-sokari h3 {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-sokari p {
+    margin-bottom: 1.25rem;
+    color: rgba(249,250,251,0.85);
+  }
+  .prose-sokari strong {
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+  .prose-sokari a {
+    color: #C8102E;
+    text-decoration: underline;
+    text-decoration-color: rgba(200,16,46,0.4);
+  }
+  .prose-sokari a:hover {
+    color: #E01030;
+    text-decoration-color: #E01030;
+  }
+  .prose-sokari ul, .prose-sokari ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .prose-sokari li {
+    margin-bottom: 0.375rem;
+    color: rgba(249,250,251,0.85);
+  }
+  .prose-sokari blockquote {
+    border-left: 3px solid #C8102E;
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: rgba(249,250,251,0.7);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   CUSTOM ANIMATIONS
+============================================================ */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes crimson-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-crimson-pulse {
+  animation: crimson-pulse 2s ease-in-out infinite;
 }
