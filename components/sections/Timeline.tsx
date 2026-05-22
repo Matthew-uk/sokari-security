@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 
 const MILESTONES = [
-  { year: 2007, title: "Company Founded", description: "Sokari Securities established in Port Harcourt by Brigadier (Rtd.) Emeka Sokari with a founding team of 12 officers." },
+  { year: 2007, title: "Company Founded", description: "Sokari Securities established in Port Harcourt with a founding team of 12 officers, drawing on senior Nigerian military leadership." },
   { year: 2010, title: "First International Contract", description: "Awarded first international contract providing security services for a multinational oil company in the Niger Delta." },
   { year: 2013, title: "Expansion to Lagos & Abuja", description: "Opened regional offices in Lagos and Abuja, establishing our national coverage across Nigeria's major commercial centres." },
   { year: 2016, title: "Maritime Division Launched", description: "Established dedicated maritime security division with licensed armed vessel escort capabilities for Gulf of Guinea operations." },

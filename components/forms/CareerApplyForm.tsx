@@ -60,18 +60,18 @@ export function CareerApplyForm({ jobTitle, jobSlug }: CareerApplyFormProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="apply-name" className="text-iron-50 text-sm">Full Name <span className="text-crimson">*</span></Label>
-          <Input id="apply-name" type="text" value={form.name} onChange={handleChange("name")} required placeholder="John Adewale" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
+          <Input id="apply-name" type="text" value={form.name} onChange={handleChange("name")} required placeholder="Your full name" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="apply-email" className="text-iron-50 text-sm">Email <span className="text-crimson">*</span></Label>
-          <Input id="apply-email" type="email" value={form.email} onChange={handleChange("email")} required placeholder="john@email.com" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
+          <Input id="apply-email" type="email" value={form.email} onChange={handleChange("email")} required placeholder="you@email.com" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="apply-phone" className="text-iron-50 text-sm">Phone</Label>
-          <Input id="apply-phone" type="tel" value={form.phone} onChange={handleChange("phone")} placeholder="+234 800 000 0000" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
+          <Input id="apply-phone" type="tel" value={form.phone} onChange={handleChange("phone")} placeholder="08068936919" className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson" />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="apply-linkedin" className="text-iron-50 text-sm">LinkedIn Profile</Label>

@@ -56,7 +56,7 @@ export default async function InsightPage({
     "@type": "Article",
     headline: insight.title,
     description: insight.excerpt,
-    author: { "@type": "Person", name: insight.author },
+    author: { "@type": "Organization", name: insight.author },
     datePublished: insight.date,
     image: insight.coverImage,
     publisher: {

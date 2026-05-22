@@ -5,7 +5,10 @@ export type Service = {
   description: string
   metaDescription: string
   icon: string
+  image: string
   features: string[]
+  methodology?: { step: string; description: string }[]
+  deliverables?: string[]
   faqs: { question: string; answer: string }[]
 }
 
@@ -17,8 +20,10 @@ export type Industry = {
   metaDescription: string
   icon: string
   image: string
+  approach?: string
   challenges: string[]
   relatedServices: string[]
+  faqs?: { question: string; answer: string }[]
 }
 
 export type Insight = {

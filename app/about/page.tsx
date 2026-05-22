@@ -6,11 +6,9 @@ import { HeroSection } from "@/components/sections/HeroSection"
 import { StatsBanner } from "@/components/sections/StatsBanner"
 import { AboutMission } from "@/components/sections/AboutMission"
 import { Timeline } from "@/components/sections/Timeline"
-import { TeamGrid } from "@/components/sections/TeamGrid"
 import { AccreditationsSection } from "@/components/sections/AccreditationsSection"
 import { CtaBanner } from "@/components/sections/CtaBanner"
 import { SectionHeader } from "@/components/common/SectionHeader"
-import { TEAM } from "@/lib/constants/team"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -46,7 +44,7 @@ export default function AboutPage() {
             <SectionHeader
               eyebrow="Our History"
               heading="Two Decades of Operational Excellence"
-              subheading="From a founding team of 12 officers in Port Harcourt to a pan-African security group with over 2,500 professionals."
+              subheading="From a founding team of 12 officers in Port Harcourt to a pan-African security group with over 2,500 professionals — one company, one standard of excellence."
               id="history-heading"
             />
           </div>
@@ -56,12 +54,11 @@ export default function AboutPage() {
         <section className="py-20 lg:py-28 bg-iron-900" aria-labelledby="team-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
             <SectionHeader
-              eyebrow="Leadership"
-              heading="Our Senior Team"
-              subheading="Led by veterans of the Nigerian military, intelligence services, and international security sector."
+              eyebrow="Our People"
+              heading="A Team Built on Discipline and Expertise"
+              subheading="Sokari Securities draws on veterans of the Nigerian military, intelligence services, and the international security sector — operating as one cohesive organisation."
               id="team-heading"
             />
-            <TeamGrid members={TEAM} />
           </div>
         </section>
 

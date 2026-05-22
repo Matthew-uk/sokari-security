@@ -60,7 +60,7 @@ export default function HomePage() {
         <AboutMission
           eyebrow="Who We Are"
           heading="Africa's Premier International Security Company"
-          body="Founded in 2007 by a retired Nigerian Army Brigadier, Sokari Securities has grown from a Port Harcourt-based guarding company into a full-spectrum international security group. We serve multinational corporations, government agencies, diplomatic missions, and high-net-worth individuals across 12 countries — delivering intelligence-led, operationally excellent security solutions that reflect the best of global standards from an African base of excellence."
+          body="Founded in 2007, Sokari Securities has grown from a Port Harcourt-based guarding company into a full-spectrum international security group. We serve multinational corporations, government agencies, diplomatic missions, and high-net-worth individuals across 12 countries — delivering intelligence-led, operationally excellent security solutions that reflect the best of global standards from an African base of excellence."
           cta={{ label: "Our Story", href: "/about" }}
           image="https://images.unsplash.com/photo-1582192730841-2a682d7375f9?auto=format&fit=crop&w=1200&q=80"
           imageAlt="Sokari Securities operational team in the field"

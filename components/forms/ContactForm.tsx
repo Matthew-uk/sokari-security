@@ -92,7 +92,7 @@ export function ContactForm() {
             value={form.name}
             onChange={handleChange("name")}
             required
-            placeholder="John Adewale"
+            placeholder="Your full name"
             className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson"
           />
         </div>
@@ -118,7 +118,7 @@ export function ContactForm() {
             value={form.email}
             onChange={handleChange("email")}
             required
-            placeholder="john@company.com"
+            placeholder="you@company.com"
             className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson"
           />
         </div>
@@ -129,7 +129,7 @@ export function ContactForm() {
             type="tel"
             value={form.phone}
             onChange={handleChange("phone")}
-            placeholder="+234 800 000 0000"
+            placeholder="08068936919"
             className="bg-bg-surface border-border-subtle text-white placeholder:text-iron-500/50 focus:border-crimson"
           />
         </div>

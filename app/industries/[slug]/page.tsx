@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
 import { ScrollProgress } from "@/components/common/ScrollProgress"
 import { HeroSection } from "@/components/sections/HeroSection"
+import { FaqSection } from "@/components/sections/FaqSection"
 import { CtaBanner } from "@/components/sections/CtaBanner"
 import { BreadcrumbNav } from "@/components/common/BreadcrumbNav"
 import { IconBox } from "@/components/common/IconBox"
@@ -49,6 +50,21 @@ export default async function IndustryPage({
     ],
   }
 
+  const faqJsonLd = industry.faqs && industry.faqs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: industry.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }
+    : null
+
   return (
     <>
       <script
@@ -57,6 +73,14 @@ export default async function IndustryPage({
           __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
       <ScrollProgress />
       <Navbar />
       <main id="main-content" tabIndex={-1}>
@@ -104,6 +128,31 @@ export default async function IndustryPage({
             </div>
           </div>
         </section>
+
+        {industry.approach && (
+          <section className="py-16 lg:py-20 bg-bg-surface/40" aria-labelledby="industry-approach-heading">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                <div className="lg:col-span-1">
+                  <SectionHeader
+                    eyebrow="How We Engage"
+                    heading="Our Approach"
+                    align="left"
+                    id="industry-approach-heading"
+                    headingClassName="text-3xl md:text-4xl"
+                  />
+                </div>
+                <div className="lg:col-span-2">
+                  <p className="text-iron-200/80 text-base md:text-lg leading-relaxed">
+                    {industry.approach}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {industry.faqs && industry.faqs.length > 0 && <FaqSection faqs={industry.faqs} />}
 
         <CtaBanner
           headline={`Protect your ${industry.title} operations`}

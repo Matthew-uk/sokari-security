@@ -83,19 +83,13 @@ const orgJsonLd = {
     "Premium international security company headquartered in Port Harcourt, Nigeria. Executive protection, intelligence, physical security, and risk management.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "4 Tombia Street, GRA Phase 2",
+    streetAddress: "100 NTA Road",
     addressLocality: "Port Harcourt",
     addressRegion: "Rivers State",
-    postalCode: "500001",
     addressCountry: "NG",
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 4.8156,
-    longitude: 7.0498,
-  },
-  telephone: "+234-800-000-0000",
-  email: "info@sokarisecurities.com",
+  telephone: "08068936919",
+  email: "sokariservices@gmail.com",
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -105,13 +99,13 @@ const orgJsonLd = {
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+234-800-000-0000",
+      telephone: "08068936919",
       contactType: "customer service",
       availableLanguage: "English",
     },
     {
       "@type": "ContactPoint",
-      telephone: "+234-900-000-0000",
+      telephone: "08068936919",
       contactType: "emergency",
       availableLanguage: "English",
     },
