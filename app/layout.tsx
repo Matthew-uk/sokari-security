@@ -89,7 +89,7 @@ const orgJsonLd = {
     addressCountry: "NG",
   },
   telephone: "08068936919",
-  email: "sokariservices@gmail.com",
+  email: "info@sokarisecurities.com",
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

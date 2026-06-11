@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Shield } from "lucide-react"
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Shield } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,33 +11,34 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import { buttonVariants } from "@/components/ui/button"
-import { NavbarMobile } from "./NavbarMobile"
-import { NAV_ITEMS } from "@/lib/constants/navigation"
-import { cn } from "@/lib/utils"
+} from '@/components/ui/navigation-menu';
+import { buttonVariants } from '@/components/ui/button';
+import { NavbarMobile } from './NavbarMobile';
+import { NAV_ITEMS } from '@/lib/constants/navigation';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export function Navbar() {
-  const pathname = usePathname()
-  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", handler, { passive: true })
-    return () => window.removeEventListener("scroll", handler)
-  }, [])
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
 
   const desktopItems = NAV_ITEMS.filter(
-    (item) => item.label !== "Home" && item.label !== "Contact"
-  )
+    (item) => item.label !== 'Home' && item.label !== 'Contact',
+  );
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
+        'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
         scrolled
-          ? "bg-iron-950/96 backdrop-blur-md border-b border-iron-800/60 border-b-crimson/10 shadow-nav"
-          : "bg-transparent"
+          ? 'bg-iron-950/96 backdrop-blur-md border-b border-iron-800/60 border-b-crimson/10 shadow-nav'
+          : 'bg-transparent',
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,12 +49,12 @@ export function Navbar() {
             className="flex items-center gap-2.5 group shrink-0"
             aria-label="Sokari Securities home"
           >
-            <div className="relative">
-              <Shield className="h-6 w-6 text-crimson transition-all duration-200 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(200,16,46,0.6)]" />
-            </div>
-            <span className="font-serif text-white text-lg tracking-[0.22em] uppercase leading-none">
-              Sokari Securities
-            </span>
+            <Image
+              src="/logo/logo.png"
+              alt="Sokari Securities"
+              width={200}
+              height={200}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -68,10 +69,10 @@ export function Navbar() {
                     <NavigationMenuItem key={item.label}>
                       <NavigationMenuTrigger
                         className={cn(
-                          "bg-transparent text-sm font-medium transition-colors hover:text-crimson hover:bg-transparent data-[state=open]:text-crimson data-[state=open]:bg-transparent",
-                          pathname.startsWith(item.href) && item.href !== "/"
-                            ? "text-crimson"
-                            : "text-iron-200"
+                          'bg-transparent text-sm font-medium transition-colors hover:text-crimson hover:bg-transparent data-[state=open]:text-crimson data-[state=open]:bg-transparent',
+                          pathname.startsWith(item.href) && item.href !== '/'
+                            ? 'text-crimson'
+                            : 'text-iron-200',
                         )}
                       >
                         {item.label}
@@ -83,10 +84,10 @@ export function Navbar() {
                               <NavigationMenuLink
                                 render={<Link href={child.href} />}
                                 className={cn(
-                                  "block px-3 py-2 text-sm rounded-md transition-colors",
+                                  'block px-3 py-2 text-sm rounded-md transition-colors',
                                   pathname === child.href
-                                    ? "text-crimson bg-crimson-muted"
-                                    : "text-iron-200 hover:text-crimson hover:bg-crimson-muted"
+                                    ? 'text-crimson bg-crimson-muted'
+                                    : 'text-iron-200 hover:text-crimson hover:bg-crimson-muted',
                                 )}
                               >
                                 {child.label}
@@ -101,16 +102,16 @@ export function Navbar() {
                       <NavigationMenuLink
                         render={<Link href={item.href} />}
                         className={cn(
-                          "px-3 py-2 text-sm font-medium rounded-md transition-colors inline-block",
+                          'px-3 py-2 text-sm font-medium rounded-md transition-colors inline-block',
                           pathname === item.href
-                            ? "text-crimson"
-                            : "text-iron-200 hover:text-crimson"
+                            ? 'text-crimson'
+                            : 'text-iron-200 hover:text-crimson',
                         )}
                       >
                         {item.label}
                       </NavigationMenuLink>
                     </NavigationMenuItem>
-                  )
+                  ),
                 )}
               </NavigationMenuList>
             </NavigationMenu>
@@ -120,7 +121,7 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className={cn(buttonVariants(), "hidden lg:inline-flex")}
+              className={cn(buttonVariants(), 'hidden lg:inline-flex')}
             >
               Request Consultation
             </Link>
@@ -129,5 +130,5 @@ export function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }
